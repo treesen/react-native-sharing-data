@@ -12,8 +12,8 @@ export default function App() {
 
     SharingData.insertData(urlTest, 'deviceId', 'xxxxxxx').then(() => {
       urlTest = 'content://com.reactnativesharingdata/data/1/#';
-      SharingData.checkContentExist(urlTest).then((msg) => {
-        Alert.alert(`${msg}`);
+      SharingData.queryData(urlTest).then((msg) => {
+        Alert.alert(msg[0].deviceId);
       });
     });
   }, []);

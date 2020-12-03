@@ -1,13 +1,9 @@
 package com.reactnativesharingdata
 
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactContextBaseJavaModule
-import com.facebook.react.bridge.ReactMethod
-import com.facebook.react.bridge.Promise
-import android.content.UriMatcher
 import android.net.Uri
 import android.widget.Toast
 import android.content.ContentValues
+import com.facebook.react.bridge.*
 
 class SharingDataModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
@@ -48,16 +44,24 @@ class SharingDataModule(reactContext: ReactApplicationContext) : ReactContextBas
     fun queryData(url: String, promise: Promise) {
       var CONTENT_URI = Uri.parse(url)
       var c = baseReactContext.getContentResolver().query(CONTENT_URI, null, null, null, Constants.Content.CONTENT_NAME)
-      if (c.moveToFirst()) {
+
+      if (c == null) {
+        promise.resolve(null)
+      } else if (c.moveToFirst()) {
+
+          var dataArray = Arguments.createArray()
           do{
-              Toast.makeText(baseReactContext,
-                      c.getString(c.getColumnIndex(Constants.Content._ID)) +
-                              ", " +  c.getString(c.getColumnIndex(Constants.Content.CONTENT_NAME)) +
-                              ", " + c.getString(c.getColumnIndex(Constants.Content.CONTENT_VALUE)),
-                      Toast.LENGTH_SHORT).show();
+            var key = c.getString(c.getColumnIndex(Constants.Content.CONTENT_NAME))
+            var value = c.getString(c.getColumnIndex(Constants.Content.CONTENT_VALUE))
+
+            val item = Arguments.createMap();
+            item.putString(key, value)
+            dataArray.pushMap(item)
           } while (c.moveToNext());
+
+        promise.resolve(dataArray)
       }
-      promise.resolve("done")
+
     }
 
 
