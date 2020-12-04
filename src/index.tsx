@@ -3,7 +3,8 @@ import { NativeModules } from 'react-native';
 type SharingDataType = {
   multiply(a: number, b: number): Promise<number>;
   checkContentExist(url: string): Promise<boolean>;
-  queryData(url: string): Promise<any>;
+  queryAllData(url: string): Promise<any>;
+  queryDataByKey(url: string, key: String): Promise<any>;
   insertData(url: string, key: string, value: string): Promise<any>;
 };
 

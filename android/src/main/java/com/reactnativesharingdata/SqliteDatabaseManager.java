@@ -14,7 +14,7 @@ public class SqliteDatabaseManager extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String	CREATE_PHONEBOOK_TABLE = "CREATE	TABLE " + Constants.Content.TABLE_NAME + "(" + Constants.Content.ID + " INTEGER PRIMARY KEY,"
-                + Constants.Content.CONTENT_NAME + " TEXT," + Constants.Content.CONTENT_VALUE + " TEXT" + ")";
+                + Constants.Content.CONTENT_KEY + " TEXT," + Constants.Content.CONTENT_VALUE + " TEXT" + ")";
         sqLiteDatabase.execSQL(CREATE_PHONEBOOK_TABLE);
     }
 

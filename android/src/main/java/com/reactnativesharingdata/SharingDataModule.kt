@@ -1,7 +1,6 @@
 package com.reactnativesharingdata
 
 import android.net.Uri
-import android.widget.Toast
 import android.content.ContentValues
 import com.facebook.react.bridge.*
 
@@ -22,46 +21,49 @@ class SharingDataModule(reactContext: ReactApplicationContext) : ReactContextBas
 
     @ReactMethod
     fun checkContentExist(url: String, promise: Promise) {
-      var CONTENT_URI = Uri.parse(url)
-      var c = baseReactContext.getContentResolver().query(CONTENT_URI, null, null, null, Constants.Content.CONTENT_NAME)
-      if (c == null) {
-        promise.resolve(false)
-      } else {
-        c.moveToFirst()
-        var value = c.getString(c.getColumnIndex( Constants.Content.CONTENT_VALUE))
+      var data = this.query(url, null, null, null, Constants.Content.CONTENT_KEY)
 
-        if (value == null || value == "") {
-          promise.resolve(false)
-        } else {
-          promise.resolve(true)
-        }
-
-      }
-
+      promise.resolve(data !== null)
     }
 
     @ReactMethod
-    fun queryData(url: String, promise: Promise) {
-      var CONTENT_URI = Uri.parse(url)
-      var c = baseReactContext.getContentResolver().query(CONTENT_URI, null, null, null, Constants.Content.CONTENT_NAME)
+    fun queryAllData(url: String, promise: Promise) {
 
-      if (c == null) {
-        promise.resolve(null)
-      } else if (c.moveToFirst()) {
+      var data = this.query(url, null, null, null, Constants.Content.CONTENT_KEY)
 
-          var dataArray = Arguments.createArray()
-          do{
-            var key = c.getString(c.getColumnIndex(Constants.Content.CONTENT_NAME))
-            var value = c.getString(c.getColumnIndex(Constants.Content.CONTENT_VALUE))
+      promise.resolve(data)
+    }
 
-            val item = Arguments.createMap();
-            item.putString(key, value)
-            dataArray.pushMap(item)
-          } while (c.moveToNext());
+    @ReactMethod
+    fun queryDataByKey(url: String, key: String?, promise: Promise) {
 
-        promise.resolve(dataArray)
+      var data = this.query(url, null, Constants.Content.CONTENT_KEY + " = '$key'", null, Constants.Content.CONTENT_KEY)
+
+      promise.resolve(data)
+    }
+
+    /*
+    * return map to keep key unique
+    * */
+    private fun query(url: String, projection:  Array<out String>?, selection: String?, selectionArgs:  Array<out String>?, sortOrder: String ): WritableMap? {
+      var uri = Uri.parse(url)
+      var c = baseReactContext.contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
+
+      if (c != null && c.count > 0 && c.moveToFirst()) {
+
+        var data = Arguments.createMap()
+        do {
+          var key = c.getString(c.getColumnIndex(Constants.Content.CONTENT_KEY))
+          var value = c.getString(c.getColumnIndex(Constants.Content.CONTENT_VALUE))
+
+          data.putString(key, value)
+
+        } while (c.moveToNext());
+
+        return data
       }
 
+      return null
     }
 
 
@@ -69,12 +71,12 @@ class SharingDataModule(reactContext: ReactApplicationContext) : ReactContextBas
     fun insertData(url: String, key: String, value: String, promise: Promise) {
       var CONTENT_URI = Uri.parse(url)
       var values = ContentValues()
-      values.put(Constants.Content.CONTENT_NAME, key)
+      values.put(Constants.Content.CONTENT_KEY, key)
       values.put(Constants.Content.CONTENT_VALUE, value)
 
-      baseReactContext.getContentResolver().insert(CONTENT_URI, values)
+      baseReactContext.contentResolver.insert(CONTENT_URI, values)
 
-      var mUri = baseReactContext.getContentResolver().insert(CONTENT_URI, values)
+      var mUri = baseReactContext.contentResolver.insert(CONTENT_URI, values)
 
       promise.resolve(mUri != null)
     }

@@ -33,7 +33,7 @@ public class Constants {
         public static final String TABLE_NAME = "share_content";
 
         public static final String ID = "_id";
-        public static final String CONTENT_NAME = "content_name";
+        public static final String CONTENT_KEY = "content_key";
         public static final String CONTENT_VALUE = "content_value";
 
     }

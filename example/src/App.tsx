@@ -7,14 +7,21 @@ export default function App() {
 
   React.useEffect(() => {
     SharingData.multiply(3, 7).then(setResult);
-    var urlTest = 'content://com.reactnativesharingdata/data';
-    // var urlTest = "content://com.reactnativesharingdata/data/1/#"
+    // var urlTest = 'content://com.reactnativesharingdata/data';
+    // // var urlTest = "content://com.reactnativesharingdata/data/1/#"
 
-    SharingData.insertData(urlTest, 'deviceId', 'xxxxxxx').then(() => {
-      urlTest = 'content://com.reactnativesharingdata/data';
-      SharingData.queryData(urlTest).then((msg) => {
-        console.log(JSON.stringify(msg));
-      });
+    var urlTest = 'content://com.reactnativesharingdata/data';
+
+    //  SharingData.insertData(urlTest, 'test', 'xxxxxxx1').then(() => {
+    //   SharingData.queryDataByKey(urlTest, "test").then((msg) => {
+    //     console.log(msg)
+    //     alert(JSON.stringify(msg));
+    //   });
+    // });
+
+    SharingData.queryAllData(urlTest).then((msg) => {
+      console.log(msg);
+      // alert(JSON.stringify(msg));
     });
   }, []);
 
