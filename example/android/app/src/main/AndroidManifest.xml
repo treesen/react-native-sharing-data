@@ -3,8 +3,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <permission android:name="com.reactnativesharingdata.READ_DATABASE"
+    <permission android:name="com.reactnativesharingdata.ACCESS_DATABASE"
     android:protectionLevel="signature" />
+
+  <uses-permission android:name="com.reactnativesharingdata.otherapp.ACCESS_DATABASE" />
 
     <application
       android:name=".MainApplication"
@@ -29,7 +31,7 @@
       <provider
         android:authorities="com.reactnativesharingdata"
         android:name="com.reactnativesharingdata.ShareContentProvider"
-        android:readPermission="com.reactnativesharingdata.READ_DATABASE"
+        android:permission="com.reactnativesharingdata.ACCESS_DATABASE"
         android:exported="true"/>
     </application>
 
