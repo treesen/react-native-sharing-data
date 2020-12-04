@@ -12,6 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import com.reactnativesharingdata.SharingDataPackage;
+import com.reactnativesharingdata.Constants;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -48,6 +49,7 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    Constants.initUri("com.reactnativesharingdata", "/data");
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager()); // Remove this line if you don't want Flipper enabled
   }
 

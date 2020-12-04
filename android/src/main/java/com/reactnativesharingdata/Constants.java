@@ -1,13 +1,23 @@
 package com.reactnativesharingdata;
 
+import java.util.function.Function;
+
 import android.net.Uri;
 import android.provider.BaseColumns;
 
 public class Constants {
 
-    public static final String AUTHORITY = "com.reactnativesharingdata";
-    public static final String PATH  = "/data";
-    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + PATH);
+    public static String AUTHORITY = "com.reactnativesharingdata";
+    public static String PATH  = "/data";
+    public static Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + PATH);
+
+    public static void initUri(String auth, String path) {
+        AUTHORITY = auth;
+        PATH = path;
+        CONTENT_URI = Uri.parse("content://" + auth + path);
+        ShareContentProvider.setUriMatcher(auth, path);
+    }
+
 
     public static final String CONTENT_LIST = "vnd.android.cursor.dir/multi";
     public static final String CONTENT_ITEM = "vnd.android.cursor.item/single";

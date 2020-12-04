@@ -29,7 +29,7 @@
       <provider
         android:authorities="com.reactnativesharingdata"
         android:name="com.reactnativesharingdata.ShareContentProvider"
-        android:permission="com.sqisland.android.protected_provider.ACCESS_DATA"
+        android:readPermission="com.reactnativesharingdata.READ_DATABASE"
         android:exported="true"/>
     </application>
 

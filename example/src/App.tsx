@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, Alert } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import SharingData from 'react-native-sharing-data';
 
 export default function App() {
@@ -11,9 +11,9 @@ export default function App() {
     // var urlTest = "content://com.reactnativesharingdata/data/1/#"
 
     SharingData.insertData(urlTest, 'deviceId', 'xxxxxxx').then(() => {
-      urlTest = 'content://com.reactnativesharingdata/data/1/#';
+      urlTest = 'content://com.reactnativesharingdata/data';
       SharingData.queryData(urlTest).then((msg) => {
-        Alert.alert(msg[0].deviceId);
+        console.log(JSON.stringify(msg));
       });
     });
   }, []);

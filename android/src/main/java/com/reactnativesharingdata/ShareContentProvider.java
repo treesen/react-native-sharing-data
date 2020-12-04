@@ -19,8 +19,12 @@ public class ShareContentProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        sUriMatcher.addURI(Constants.AUTHORITY, Constants.PATH, 1);
-        sUriMatcher.addURI(Constants.AUTHORITY, Constants.PATH + "/#", 2);
+        setUriMatcher(Constants.AUTHORITY, Constants.PATH);
+    }
+
+    public static void setUriMatcher(String auth, String path) {
+        sUriMatcher.addURI(auth, path, 1);
+        sUriMatcher.addURI(auth, path + "/#", 2);
     }
 
     @Override
