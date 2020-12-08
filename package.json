@@ -1,6 +1,6 @@
 {
   "name": "react-native-sharing-data",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "share data between apps",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
