@@ -33,7 +33,7 @@ AndroidManifest.xml, add provider config and permission
       
       <provider
         android:authorities="com.reactnativesharingdata" // change it  if you need.
-        android:name="com.reactnativesharingdata.ShareContentProvider" 
+        android:name="com.reactnativesharingdata.ShareContentProvider" // DO NOT CHANGE
         android:permission="com.reactnativesharingdata.ACCESS_DATABASE" // change it if you need, but keep the same with permission name above
         android:exported="true"/>
     </application>
