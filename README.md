@@ -1,12 +1,14 @@
 # react-native-sharing-data
 
-share data between apps. Currently, it only supports Android.
+share data between apps, support both iOS and Android.
 
 ## Installation
 
 ```sh
 npm install react-native-sharing-data
 ```
+
+## Android
 
 AndroidManifest.xml, add provider config and permission
 ```xml
@@ -71,10 +73,33 @@ public void onCreate() {
 }
 ```
 
+## iOS
+
+need capbilty of the App Groups when you specialize the defaultSuitName
 
 ## Usage
 
 ```js
+ios functions:
+
+  set(defaultSuiteName: string | null, key: string, value: string): Promise<void>;
+  get(defaultSuiteName: string | null, key: string): Promise<string>;
+  clear(defaultSuiteName: string | null, key: string): Promise<void>;
+  getMultiple(defaultSuiteName: string | null, keys: [string]): Promise<[string]>;
+  setMultiple(defaultSuiteName: string | null, data: [{}]): Promise<void>;
+  clearMultiple(defaultSuiteName: string | null, keys: [string]): Promise<void>;
+  
+  
+android functions:
+
+  checkContentExist(url: string): Promise<boolean>;
+  queryAllData(url: string): Promise<any>;
+  queryDataByKey(url: string, key: String): Promise<any>;
+  insertData(url: string, key: string, value: string): Promise<any>;
+
+
+example:
+
 import SharingData from "react-native-sharing-data";
 
 // ...
