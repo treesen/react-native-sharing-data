@@ -3,13 +3,16 @@ import { StyleSheet, View, Text } from 'react-native';
 import SharingData from 'react-native-sharing-data';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
+  const [result] = React.useState<number | undefined>();
   React.useEffect(() => {
-    SharingData.multiply(3, 7).then(setResult);
-    // var urlTest = 'content://com.reactnativesharingdata/data';
-    // // var urlTest = "content://com.reactnativesharingdata/data/1/#"
-
+    //====== ios
+    SharingData.set(null, 'xxx', 'sss').then(() => {
+      SharingData.get('xxx', 'xxx').then((v) => {
+        console.log(v);
+        SharingData.clear('xxx', 'xxx');
+      });
+    });
+    //====== android
     var urlTest = 'content://com.reactnativesharingdata/data';
 
     //  SharingData.insertData(urlTest, 'test', 'xxxxxxx1').then(() => {
